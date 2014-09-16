@@ -3,6 +3,14 @@ infinite-story-download
 
 c# project to download stories from infinite-story.com into html or pdf formats
 
+This project is intended to allow users to download stories from infinite-story.com to local versions, in either html or pdf format. Html versions download each page (and graphics) separately into a folder, while the pdf generator creates a single pdf file.
+
+it is based on the roomId of the initial starting room, which is easy to find from the URL. For example, the URL for the starting room for the excellent story Eternal by EndMaster is http://infinite-story.com/story/room.php?id=94415. So the roomId in this example is 94415.
+
+to generate a local PDF version, use a command line: -r -p D:\Documents\myFolder\pdfName.pdf
+
+I made this project in a few hours while watching TV, so I'm actually surprised it even works. I'll probably update this occasionally since it's publicly available now and I'm embarrassed at the quality of the code. Feel free to use it, all standard disclaimers apply, etc.
+
 
 Copyright (c) 2014, Sam Grantham
 All rights reserved.
