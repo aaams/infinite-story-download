@@ -1,0 +1,17 @@
+d:\documents\visual studio 2013\Projects\downloadInfiniteStory\downloadInfiniteStory\bin\Debug\downloadInfiniteStory.exe.config
+d:\documents\visual studio 2013\Projects\downloadInfiniteStory\downloadInfiniteStory\bin\Debug\downloadInfiniteStory.exe
+d:\documents\visual studio 2013\Projects\downloadInfiniteStory\downloadInfiniteStory\bin\Debug\downloadInfiniteStory.pdb
+d:\documents\visual studio 2013\Projects\downloadInfiniteStory\downloadInfiniteStory\obj\Debug\downloadInfiniteStory.csprojResolveAssemblyReference.cache
+d:\documents\visual studio 2013\Projects\downloadInfiniteStory\downloadInfiniteStory\obj\Debug\downloadInfiniteStory.exe
+d:\documents\visual studio 2013\Projects\downloadInfiniteStory\downloadInfiniteStory\obj\Debug\downloadInfiniteStory.pdb
+d:\documents\visual studio 2013\Projects\downloadInfiniteStory\downloadInfiniteStory\bin\Debug\HtmlAgilityPack.dll
+d:\documents\visual studio 2013\Projects\downloadInfiniteStory\downloadInfiniteStory\bin\Debug\HtmlAgilityPack.pdb
+d:\documents\visual studio 2013\Projects\downloadInfiniteStory\downloadInfiniteStory\bin\Debug\HtmlAgilityPack.xml
+d:\documents\visual studio 2013\Projects\downloadInfiniteStory\downloadInfiniteStory\bin\Debug\CommandLine.dll
+d:\documents\visual studio 2013\Projects\downloadInfiniteStory\downloadInfiniteStory\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+d:\documents\visual studio 2013\Projects\downloadInfiniteStory\downloadInfiniteStory\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Logging.dll
+d:\documents\visual studio 2013\Projects\downloadInfiniteStory\downloadInfiniteStory\bin\Debug\CommandLine.xml
+d:\documents\visual studio 2013\Projects\downloadInfiniteStory\downloadInfiniteStory\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.xml
+d:\documents\visual studio 2013\Projects\downloadInfiniteStory\downloadInfiniteStory\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Logging.xml
+d:\documents\visual studio 2013\Projects\downloadInfiniteStory\downloadInfiniteStory\bin\Debug\itextsharp.dll
+d:\documents\visual studio 2013\Projects\downloadInfiniteStory\downloadInfiniteStory\bin\Debug\itextsharp.xml
