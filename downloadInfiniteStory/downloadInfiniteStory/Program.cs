@@ -164,7 +164,7 @@ namespace downloadInfiniteStory
         private static void BuildAllISPages(Dictionary<string, ISPage> pageMap, string roomId)
         {
             String baseHtml = ReadHtml(roomId);
-            ISPage page = ISPageHtmlParser.ParseRawISHtml(baseHtml);
+            ISPage page = ISPageHtmlParser.ParseRawISHtml(baseHtml, roomId);
             pageMap.Add(roomId, page);
             foreach (String childRoomId in page.Choices.Select(x => x.RoomId))
             {
@@ -178,7 +178,7 @@ namespace downloadInfiniteStory
         private static void BuildHtml(Dictionary<string, ISPage> pageMap, string roomId)
         {
             String baseHtml = ReadHtml(roomId);
-            ISPage page = ISPageHtmlParser.ParseRawISHtml(baseHtml);
+            ISPage page = ISPageHtmlParser.ParseRawISHtml(baseHtml, roomId);
             pageMap.Add(roomId, page);
             SavePage(roomId, page);
             foreach(String childRoomId in page.Choices.Select(x=>x.RoomId)) 

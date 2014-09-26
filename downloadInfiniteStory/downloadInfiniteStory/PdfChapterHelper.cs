@@ -1,4 +1,5 @@
 ﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace downloadInfiniteStory
 
             Font currentFont = FontFactory.GetFont(FontFactory.HELVETICA);
 
+            SetAnchor(iSPage, chapter, pageMap);
             WriteContents(htmlInput, chapter);
 
             if (String.IsNullOrWhiteSpace(iSPage.EndText))
@@ -31,6 +33,15 @@ namespace downloadInfiniteStory
             }
 
             return chapter;
+        }
+
+        private static void SetAnchor(ISPage iSPage, Chapter chapter, Dictionary<string, int> pageMap)
+        {
+            Anchor anchorTarget = new Anchor(iSPage.RoomId);
+            anchorTarget.Name = iSPage.RoomId;
+            Paragraph targetParagraph = new Paragraph();
+            targetParagraph.Add(anchorTarget);
+            chapter.Add(targetParagraph);
         }
 
         private static void WriteContents(String htmlInput, Chapter chapter)
@@ -131,7 +142,16 @@ namespace downloadInfiniteStory
             {
                 if(pageMap.ContainsKey(choice.RoomId))
                 {
-                    chapter.Add(new iTextSharp.text.Phrase(String.Format("{0} - Page {1}\n", choice.Text, pageMap[choice.RoomId])));
+                    Anchor anchor = new Anchor(String.Format("{0} - Page {1}\n", choice.Text, pageMap[choice.RoomId]));
+                    anchor.Reference = "#" + choice.RoomId;
+                    Paragraph paragraph = new Paragraph();
+                    paragraph.Add(anchor);
+                    chapter.Add(paragraph);
+
+
+                    //Chunk chunk = new Chunk(String.Format("{0} - Page {1}\n", choice.Text, pageMap[choice.RoomId]));
+                    //PdfAction action = PdfAction.GotoLocalPage(pageMap[choice.RoomId], new PdfDestination(0), );
+                    //chunk.SetAction(action);
                 }
                 else
                 {

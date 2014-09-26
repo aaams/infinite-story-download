@@ -21,9 +21,9 @@ namespace downloadInfiniteStory
 
         private static readonly IDictionary<String, String> imageMap = new Dictionary<String, String>();
 
-        public static ISPage ParseRawISHtml(String html)
+        public static ISPage ParseRawISHtml(String html, String roomId)
         {
-            var page = new ISPage(html);
+            var page = new ISPage(roomId, html);
 
             int mainStart = html.IndexOf(STORY_MAIN);
             int mainEnd = html.IndexOf(END_MAIN);

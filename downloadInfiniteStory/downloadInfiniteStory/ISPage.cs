@@ -16,12 +16,13 @@ namespace downloadInfiniteStory
         public IList<Choice> Choices { get; set; }
         public String EndText { get; set; } //null for non-end pages
         public int PageNumber { get; set; } //only used for PDF generation
-
+        public string RoomId { get; set; }
 
         public IDictionary<String, String> imageMap { get; set; }
 
-        public ISPage(string baseHtml)
+        public ISPage(string roomId, string baseHtml)
         {
+            this.RoomId = roomId;
             this.BaseHtml = baseHtml;
             this.Choices = new List<Choice>();
             this.imageMap = new Dictionary<String, String>();
@@ -46,5 +47,6 @@ namespace downloadInfiniteStory
             }
             return html.ToString();
         }
+
     }
 }
