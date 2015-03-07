@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EPubFactory</name>
+    </assembly>
+    <members>
+        <member name="T:EPubFactory.EPubWriter">
+            <summary>Represents an e-pub connected to a stream and exposes write-only operations.</summary>
+        </member>
+        <member name="M:EPubFactory.EPubWriter.CreateWriterAsync(System.IO.Stream,System.String,System.String,System.String,System.Globalization.CultureInfo,System.Boolean)">
+            <summary>Creates a writer connected to a <see cref="T:System.IO.Stream"/>.</summary>
+            <param name="stream">
+            Output stream ; must be at position zero and have zero length in order for the resulting epub
+            to make sense.
+            </param>
+            <param name="leaveOpen">
+            <c>true</c> to leave the stream open after the object is disposed; otherwise, <c>false</c>.
+            </param>
+            <param name="title">Title of the package.</param>
+            <param name="author">Author of the package.</param>
+            <param name="identifier">Unique identifier of the package (could be a uri).</param>
+            <param name="culture">Culture of the package ; default is <c>en</c>.</param>
+            <returns>Asynchronously created writer.</returns>
+        </member>
+        <member name="M:EPubFactory.EPubWriter.Dispose">
+            <summary>
+            Releases the resources used by the current instance of the <see cref="T:EPubFactory.EPubWriter"/> class.
+            </summary>
+        </member>
+        <member name="M:EPubFactory.EPubWriter.WriteEndOfPackageAsync">
+            <summary>
+            Writes the TOC of the package.
+            Must be called and have completed before calling <see cref="M:EPubFactory.EPubWriter.Dispose"/>.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown if the method has already been called.</exception>
+            <returns>Asynchronous completion.</returns>
+        </member>
+        <member name="M:EPubFactory.EPubWriter.AddChapterAsync(System.String,System.String,System.String)">
+            <summary>Add a chapter to the e-pub package.</summary>
+            <param name="fileName">File name of the chapter.</param>
+            <param name="title">Title of the chapter.</param>
+            <param name="content">Html content of the chapter.</param>
+            <returns>Asynchronous completion.</returns>
+        </member>
+        <member name="M:EPubFactory.EPubWriter.GetChapterStream(System.String,System.String)">
+            <summary>Adds a chapter to the e-pub package and return its writable stream.</summary>
+            <param name="fileName">File name of the chapter.</param>
+            <param name="title">Title of the chapter.</param>
+            <returns>Chapter stream ; must be closed or disposed.</returns>
+        </member>
+        <member name="M:EPubFactory.EPubWriter.AddResourceAsync(System.String,System.String,System.Byte[])">
+            <summary>Adds a resource (e.g. an image) to the e-pub package.</summary>
+            <param name="fileName">File name of the resource.</param>
+            <param name="mimeType">Mime type of the resource.</param>
+            <param name="content">Byte-array representation of the resource.</param>
+            <returns>Asynchronous completion.</returns>
+        </member>
+        <member name="M:EPubFactory.EPubWriter.GetResourceStream(System.String,System.String)">
+            <summary>Adds a resource (e.g. an image) to the e-pub package and return its writable stream.</summary>
+            <param name="fileName">File name of the resource.</param>
+            <param name="mimeType">Mime type of the resource.</param>
+            <returns>Resource stream ; must be closed or disposed.</returns>
+        </member>
+        <member name="P:EPubFactory.EPubWriter.Publisher">
+            <summary>Publisher of the package.</summary>
+            <remarks>Optional.</remarks>
+        </member>
+        <member name="P:EPubFactory.EPubWriter.CreationDate">
+            <summary>Date of creation of the package.</summary>
+            <remarks>Optional ; if not specified, current date is used.</remarks>
+        </member>
+        <member name="T:EPubFactory.Templates.Template">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:EPubFactory.Templates.Template.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:EPubFactory.Templates.Template.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:EPubFactory.Templates.Template.Container">
+             <summary>
+               Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+            &lt;container version=&quot;1.0&quot; xmlns=&quot;urn:oasis:names:tc:opendocument:xmlns:container&quot;&gt;
+              &lt;rootfiles&gt;
+                &lt;rootfile full-path=&quot;content.opf&quot; media-type=&quot;application/oebps-package+xml&quot;/&gt;
+              &lt;/rootfiles&gt;
+            &lt;/container&gt;
+            .
+             </summary>
+        </member>
+        <member name="P:EPubFactory.Templates.Template.Content">
+             <summary>
+               Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+            &lt;package xmlns=&quot;http://www.idpf.org/2007/opf&quot; version=&quot;2.0&quot; unique-identifier=&quot;PrimaryID&quot;&gt;
+              &lt;metadata xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot; xmlns:opf=&quot;http://www.idpf.org/2007/opf&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
+                &lt;dc-metadata xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot;&gt;
+                  &lt;!--
+                  &lt;dc:identifier id=&quot;PrimaryID&quot; opf:scheme=&quot;URN&quot;&gt;urn:uuid:c8fb41b3952145fe97c2319f1461c98b&lt;/dc:identifier&gt;
+                  &lt;dc:title&gt;Instapaper: Monday, Oct. 21st&lt; [rest of string was truncated]&quot;;.
+             </summary>
+        </member>
+        <member name="P:EPubFactory.Templates.Template.Toc">
+             <summary>
+               Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+            &lt;!DOCTYPE ncx PUBLIC &quot;-//NISO//DTD ncx 2005-1//EN&quot;
+               &quot;http://www.daisy.org/z3986/2005/ncx-2005-1.dtd&quot;&gt;
+            &lt;ncx xml:lang=&quot;en&quot; xmlns=&quot;http://www.daisy.org/z3986/2005/ncx/&quot; version=&quot;2005-1&quot;&gt;
+              &lt;head&gt;
+                &lt;meta name=&quot;dtb:uid&quot; content=&quot;TODO&quot;/&gt;
+                &lt;meta name=&quot;dtb:depth&quot; content=&quot;1&quot;/&gt;
+                &lt;meta name=&quot;dtb:totalPageCount&quot; content=&quot;0&quot;/&gt;
+                &lt;meta name=&quot;dtb:maxPageNumber&quot; content=&quot;0&quot;/&gt;
+              &lt;/head&gt;
+              &lt;docTitle&gt;
+                &lt;text&gt;TODO&lt;/text&gt;
+              &lt;/docTitle&gt;
+              &lt;docAuthor&gt;
+                &lt;text&gt;TODO&lt;/text&gt;
+              [rest of string was truncated]&quot;;.
+             </summary>
+        </member>
+    </members>
+</doc>

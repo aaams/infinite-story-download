@@ -15,3 +15,6 @@ d:\documents\visual studio 2013\Projects\downloadInfiniteStory\downloadInfiniteS
 d:\documents\visual studio 2013\Projects\downloadInfiniteStory\downloadInfiniteStory\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Logging.xml
 d:\documents\visual studio 2013\Projects\downloadInfiniteStory\downloadInfiniteStory\bin\Debug\itextsharp.dll
 d:\documents\visual studio 2013\Projects\downloadInfiniteStory\downloadInfiniteStory\bin\Debug\itextsharp.xml
+d:\Documents\Visual Studio 2013\Projects\downloadInfiniteStory\downloadInfiniteStory\bin\Debug\EPubFactory.dll
+d:\Documents\Visual Studio 2013\Projects\downloadInfiniteStory\downloadInfiniteStory\bin\Debug\EPubFactory.xml
+D:\Documents\Visual Studio 2013\Projects\downloadInfiniteStory\downloadInfiniteStory\bin\Debug\Newtonsoft.Json.dll

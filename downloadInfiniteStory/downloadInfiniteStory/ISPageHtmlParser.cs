@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Xml;
@@ -19,9 +22,69 @@ namespace downloadInfiniteStory
         private static readonly String END_CHOICES = "<!-- end choices -->";
         private static readonly String THE_END_FOOTER = "<div id=\"room-footer\">";
 
-        private static readonly IDictionary<String, String> imageMap = new Dictionary<String, String>();
+        private static readonly IDictionary<String, String> imageMap = new ConcurrentDictionary<String, String>();
 
-        public static ISPage ParseRawISHtml(String html, String roomId)
+        public static async Task BuildAllISPages(Dictionary<string, ISPage> pageMap, string roomId, string dirPath)
+        {
+            String baseHtml = null;
+            ISPage page = null;
+            try 
+            {
+                baseHtml = await ReadHtml(roomId);
+            }
+            catch(Exception e)
+            {
+                throw new ISParseException("Could not read Infinite Story webpage", e);
+            }
+            try
+            {
+                page = ISPageHtmlParser.ParseRawISHtml(baseHtml, roomId, dirPath);
+            }
+            catch (Exception e)
+            {
+                throw new ISParseException("Could not parse Infinite Story webpage", e);
+            }
+            
+            pageMap.Add(roomId, page);
+            List<Task> waitTasks = new List<Task>();
+            foreach (String childRoomId in page.Choices.Select(x => x.RoomId))
+            {
+                if (!pageMap.ContainsKey(childRoomId))
+                {
+                    waitTasks.Add(BuildAllISPages(pageMap, childRoomId, dirPath));
+                }
+            }
+            Task.WaitAll(waitTasks.ToArray());
+        }
+
+        public static async Task<string> ReadHtml(string roomId)
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                Stream data = await client.GetStreamAsync(Program.ISUrl + roomId);
+                //WebRequest request = WebRequest.Create(Program.ISUrl + roomId);
+                //WebResponse response = request.GetResponse();
+                //Stream data = response.GetResponseStream();
+                string html = String.Empty;
+                using (StreamReader sr = new StreamReader(data))
+                {
+                    html = sr.ReadToEnd();
+                }
+                return html;
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return null;
+            }
+        }
+
+
+
+
+
+        public static ISPage ParseRawISHtml(String html, String roomId, string dirPath)
         {
             var page = new ISPage(roomId, html);
 
@@ -44,12 +107,12 @@ namespace downloadInfiniteStory
             String newHtml = html.Substring(mainStart, choiceEnd - mainStart);
             String mainTextHtml = html.Substring(mainStart, mainEnd - mainStart);
 
-            page.Contents = ParseSaveAndFixImages(mainTextHtml);
+            page.Contents = ParseSaveAndFixImages(mainTextHtml, dirPath);
 
             return page;
         }
 
-        private static String ParseSaveAndFixImages(string contents)
+        private static String ParseSaveAndFixImages(string contents, string dirPath)
         {
             contents = System.Web.HttpUtility.HtmlDecode(contents);
             HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
@@ -65,7 +128,7 @@ namespace downloadInfiniteStory
                     if (tag.Attributes["src"] != null)
                     {
                         String imgPath = tag.Attributes["src"].Value;
-                        tag.Attributes["src"].Value = GetAndSaveImage(imgPath);
+                        tag.Attributes["src"].Value = GetAndSaveImage(imgPath, dirPath);
                     }
                 }
             }
@@ -80,15 +143,15 @@ namespace downloadInfiniteStory
             return finalContents;
         }
 
-        private static string GetAndSaveImage(string imgPath)
+        private static string GetAndSaveImage(string imgPath, string dirPath)
         {
             string fileName = Path.GetFileName(imgPath);
             if (!imageMap.ContainsKey(imgPath))
             {
-                SaveImageFromUrl(imgPath, Path.Combine(Program.baseFilePath, fileName));
+                SaveImageFromUrl(imgPath, Path.Combine(Path.GetDirectoryName(dirPath), fileName));
                 imageMap.Add(imgPath, fileName);
             }
-            return Path.Combine(Program.baseFilePath, fileName);
+            return Path.Combine(dirPath, fileName);
         }
 
         public static void SaveImageFromUrl(string url, string filePath)

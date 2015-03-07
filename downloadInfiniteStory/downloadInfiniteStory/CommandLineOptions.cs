@@ -15,12 +15,20 @@ namespace downloadInfiniteStory
         public string RoomId { get; set; }
 
         [Option('p', "path", Required = true,
-          HelpText = "Path of directory to save.")]
+          HelpText = "Path of directory or filename to save.")]
         public string OutputPath { get; set; }
 
         [Option('h', "html", Required = false, DefaultValue = false,
-          HelpText = "If true, will build HTML pages instead of a PDF.")]
+          HelpText = "Set program to export HTML pages.")]
         public bool BuildHtml { get; set; }
+
+        [Option('e', "epub", Required = false, DefaultValue = false,
+          HelpText = "Set program to export EPUB.")]
+        public bool BuildEpub { get; set; }
+
+        [Option('d', "pdf", Required = false, DefaultValue = false,
+          HelpText = "Set program to export PDF.")]
+        public bool BuildPdf { get; set; }
 
         [ParserState]
         public IParserState LastParserState { get; set; }
